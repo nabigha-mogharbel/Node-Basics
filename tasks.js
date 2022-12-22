@@ -51,6 +51,14 @@ function onDataReceived(text) {
   else if(text==='list\n'){
     list()
   }
+  else if(text.slice(0,4)==='add '){
+    text=text.slice(3,text.length-1);
+    text=text.trim();
+    add(text);
+  }
+  else if(text==='add\n'){
+    add('')
+  }
   else{
     unknownCommand(text);
   }
@@ -103,6 +111,10 @@ let todoList=['grocery', 'get a new shoes', 'buy line recharge card'];
 
 function list(){
   todoList.map((todo, index) => console.log(`[${index=index+1}] ${todo}`))
+}
+
+function add(todo){
+  todo.length != 0 ? todoList.push(todo): console.log('error!: please enter a todo')
 }
 
 // The following line starts the application
