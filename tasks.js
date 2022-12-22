@@ -42,6 +42,9 @@ function onDataReceived(text) {
     text=text.trim();
     hello(text)
   }
+  else if(text==='hello\n'){
+    hello('')
+  }
   else if(text === 'help\n'){
     help();
   }
@@ -69,7 +72,7 @@ function unknownCommand(c){
  * @returns {void}
  */
 function hello(name){
-  console.log(`hello ${name}!`)
+  name.length !=0 ? console.log(`hello ${name}!`): console.log('hello!');
 }
 
 
