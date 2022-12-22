@@ -117,14 +117,30 @@ function help(){
 
 let todoList=['grocery', 'get a new shoes', 'buy line recharge card'];
 
+ /**
+ * prints the todo list
+ * @returns {void}
+ */
 function list(){
   todoList.map((todo, index) => console.log(`[${index=index+1}] ${todo}`))
 }
 
+ /**
+ * add todo => add todo to your list
+ * add => display an error
+ * @param  {string} todo the text received
+ * @returns {void}
+ */
 function add(todo){
   todo.length != 0 ? todoList.push(todo): console.log('error!: please enter a todo')
 }
 
+/**
+ * remove => remove last todo in todo list
+ * remove x => remove todo number x in todo list
+ * @param  {string} index the text received
+ * @returns {void}
+ */
 function remove(index){
   index.length!=0 ? todoList.pop(): todoList.splice(parseInt(index)-1,1)
 }
