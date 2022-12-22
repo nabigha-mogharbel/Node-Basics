@@ -59,6 +59,14 @@ function onDataReceived(text) {
   else if(text==='add\n'){
     add('')
   }
+  else if(text.slice(0,7)==='remove '){
+    text=text.slice(6,text.length-1);
+    text=text.trim();
+    remove(text);
+  }
+  else if(text==='remove\n'){
+    remove('')
+  }
   else{
     unknownCommand(text);
   }
@@ -115,6 +123,10 @@ function list(){
 
 function add(todo){
   todo.length != 0 ? todoList.push(todo): console.log('error!: please enter a todo')
+}
+
+function remove(index){
+  index.length!=0 ? todoList.pop(): todoList.splice(parseInt(index)-1,1)
 }
 
 // The following line starts the application
