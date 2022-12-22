@@ -48,6 +48,9 @@ function onDataReceived(text) {
   else if(text === 'help\n'){
     help();
   }
+  else if(text==='list\n'){
+    list()
+  }
   else{
     unknownCommand(text);
   }
@@ -96,6 +99,11 @@ function help(){
   console.log('help: display list of all commands \nexit or quit: exits the application \nhello: says hello!')
 }
 
+let todoList=['grocery', 'get a new shoes', 'buy line recharge card'];
+
+function list(){
+  todoList.map((todo, index) => console.log(`[${index=index+1}] ${todo}`))
+}
 
 // The following line starts the application
 startApp("Nabigha Mogharbel")
