@@ -81,6 +81,11 @@ function quit(){
   process.exit();
 }
 
+/**
+ * Display the list of all commands
+ *
+ * @returns {void}
+ */
 function help(){
   console.log('help: display list of all commands \nexit or quit: exits the application \nhello: says hello!')
 }
