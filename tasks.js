@@ -65,7 +65,7 @@ function onDataReceived(text) {
     remove(text);
   }
   else if(text==='remove\n'){
-    remove('')
+    remove(todoList.length)
   }
   else{
     unknownCommand(text);
@@ -142,7 +142,16 @@ function add(todo){
  * @returns {void}
  */
 function remove(index){
-  index.length!=0 ? todoList.pop(): todoList.splice(parseInt(index)-1,1)
+  index=parseInt(index);
+  if(!index){todoList.pop()}
+  else{
+    if(index >0 && index<=todoList.length){
+      todoList.splice(parseInt(index)-1,1)
+    }
+    else if(index === 0 ||index>todoList.length ){
+      console.log('error!: please enter a number that exists in your todo list')
+    }
+  }
 }
 
 // The following line starts the application
