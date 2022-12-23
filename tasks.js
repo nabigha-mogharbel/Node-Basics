@@ -9,12 +9,17 @@
  * @param  {string} name the name of the app
  * @returns {void}
  */
+let parsedData;
+const fs = require('fs');
 function startApp(name){
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
+  let data=fs.readFileSync('./database.json');
+  parsedData=JSON.parse(data)
+  console.log(parsedData.todoList[0])
 }
 
 
@@ -114,6 +119,14 @@ function hello(name){
  * @returns {void}
  */
 function quit(){
+  console.log(parsedData)
+  const fs=require('fs')
+  const data=JSON.stringify(parsedData)
+  try{fs.writeFileSync('database.json',data)
+  console.log('Saved successfuly')
+  }catch(e){
+    console.log('Batata error')
+  }
   console.log('Quitting now, goodbye!')
   process.exit();
 }
@@ -127,14 +140,12 @@ function help(){
   console.log('help: display list of all commands \nexit or quit: exits the application \nhello: says hello!')
 }
 
-let todoList = [{todo:"grocery", done:false}, {todo:"get a new shoes", done:true}, {todo:"buy line recharge card", done:false}];
-
  /**
  * prints the todo list
  * @returns {void}
  */
 function list(){
-  todoList.map((todo, index) => {todo.done===false? console.log(`[${index=index+1}] [ ] ${todo.todo}`): console.log(`[${index=index+1}] [✓] ${todo.todo}`)})
+  parsedData.todoList.map((todo, index) => {todo.done===false? console.log(`[${index=index+1}] [ ] ${todo.todo}`): console.log(`[${index=index+1}] [✓] ${todo.todo}`)})
 }
 
  /**
@@ -144,7 +155,7 @@ function list(){
  * @returns {void}
  */
 function add(todo){
-  todo.length != 0 ? todoList.push({todo: todo, done:false}): console.log('error!: please enter a todo')
+  todo.length != 0 ? parsedData.todoList.push({todo: todo, done:false}): console.log('error!: please enter a todo')
 }
 
 /**
@@ -157,11 +168,11 @@ function remove(index){
   let stringIndx=index
   console.log(index)
   index=parseInt(index);
-  if(!index && stringIndx!='0'){console.log(index); todoList.pop()}
-  else if(index<=0||index>todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
+  if(!index && stringIndx!='0'){console.log(index); parsedData.todoList.pop()}
+  else if(index<=0||index>parsedData.todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
   else{
     if(index >0 && index<=todoList.length){
-      todoList.splice(parseInt(index)-1,1)
+      parsedData.todoList.splice(parseInt(index)-1,1)
     }
   }
 }
@@ -171,15 +182,15 @@ function edit(newTitle){
   newTitle=newTitle.map(substring => substring.trim())
   let trimmedTitle=newTitle.filter(substring => substring != '')
   let index=parseInt(trimmedTitle[0])
-  if(index  && todoList.length >= index){
+  if(index  && parsedData.todoList.length >= index){
     trimmedTitle.shift();
-    todoList[index -1].todo=trimmedTitle.join(' ')
+    parsedData.todoList[index -1].todo=trimmedTitle.join(' ')
   }
-  else if(index  && todoList.length < index){
+  else if(index  && parsedData.todoList.length < index){
     console.log(`There is no todo number ${index} in your list`)
   }
   else if(!index && trimmedTitle.join('').length>0){
-    todoList[todoList.length-1].todo=trimmedTitle.join(' ')
+    parsedData.todoList[parsedData.todoList.length-1].todo=trimmedTitle.join(' ')
   }
   else{    console.log('error!: please enter a number that exists in your todo list')
 }
@@ -196,10 +207,10 @@ function check(index){
   console.log(index)
   index=parseInt(index);
   if(!index && stringIndx!='0'){console.log('error!: please enter a number that exist your todo list')}
-  else if(index<=0||index>todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
+  else if(index<=0||index>parsedData.todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
   else{
-    if(index >0 && index<=todoList.length){
-      todoList[index-1].done=true;
+    if(index >0 && index<=parsedData.todoList.length){
+      parsedData.todoList[index-1].done=true;
     }
   }
 }
@@ -215,10 +226,10 @@ function unCheck(index){
   console.log(index)
   index=parseInt(index);
   if(!index && stringIndx!='0'){console.log('error!: please enter a number that exist your todo list')}
-  else if(index<=0||index>todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
+  else if(index<=0||index>parsedData.todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
   else{
-    if(index >0 && index<=todoList.length){
-      todoList[index-1].done=false;
+    if(index >0 && index<=parsedData.todoList.length){
+      parsedData.todoList[index-1].done=false;
     }
   }
 }
