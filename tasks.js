@@ -66,6 +66,12 @@ function onDataReceived(text) {
   }
   else if(text==='remove\n'){
     remove(todoList.length)
+  } else if(text==='edit\n')
+  {console.log('error!: please enter a number of todo list to edit')}
+  else if(text.slice(0,5)==='edit '){
+    text=text.slice(5,text.length-1)
+    text=text.split(' ')
+    edit(text)
   }
   else{
     unknownCommand(text);
@@ -154,5 +160,24 @@ function remove(index){
   }
 }
 
+
+function edit(newTitle){
+  newTitle=newTitle.map(substring => substring.trim())
+  let trimmedTitle=newTitle.filter(substring => substring != '')
+  let index=parseInt(trimmedTitle[0])
+  if(index  && todoList.length >= index){
+    trimmedTitle.shift();
+    todoList[index -1]=trimmedTitle.join(' ')
+  }
+  else if(index  && todoList.length < index){
+    console.log(`There is no todo number ${index} in your list`)
+  }
+  else if(!index && trimmedTitle.join('').length>0){
+    todoList[todoList.length-1]=trimmedTitle.join(' ')
+
+  }
+  else{    console.log('error!: please enter a number that exists in your todo list')
+}
+}
 // The following line starts the application
 startApp("Nabigha Mogharbel")
