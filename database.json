@@ -1,1 +1,24 @@
-{"todoList":[{"todo":"grocery","done":false},{"todo":"get a new shoes","done":true},{"todo":"buy line recharge card","done":false},{"todo":"me","done":false},{"todo":"bye bye","done":false}]}
+{
+    "todoList": [
+        {
+            "todo": "grocery",
+            "done": false
+        },
+        {
+            "todo": "get a new shoes",
+            "done": true
+        },
+        {
+            "todo": "buy line recharge card",
+            "done": false
+        },
+        {
+            "todo": "me",
+            "done": false
+        },
+        {
+            "todo": "bye bye",
+            "done": false
+        }
+    ]
+}

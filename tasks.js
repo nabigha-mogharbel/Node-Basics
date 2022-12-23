@@ -11,18 +11,47 @@
  */
 let parsedData;
 const fs = require('fs');
+let source=process.argv[2]
 function startApp(name){
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
-  let data=fs.readFileSync('./database.json');
-  parsedData=JSON.parse(data)
-  console.log(parsedData.todoList[0])
+ // let data=fs.readFileSync('./database.json');
+ // parsedData=JSON.parse(data)
+ // console.log(parsedData.todoList[0])
 }
 
+if(!source){
+  const fs=require('fs')
+  data=fs.readFileSync('./database.json')
+  parsedData=JSON.parse(data)
+  console.log('hye bye')
+}else{
+  try {
+    const fs=require('fs')
+    data=fs.readFileSync(source)
+    console.log('try',data)
+    parsedData=JSON.parse(data)
+    console.log('file data', parsedData.code)
+  }catch(err){
+    const fs=require('fs')
 
+  }
+  const fs=require('fs')
+  if(fs.existsSync(source)){
+    const fs=require('fs')
+    data=fs.readFileSync(source)
+    console.log('file try')
+    parsedData=JSON.parse(data)
+  }
+  else{
+    parsedData={todoList:[]}
+  }
+  
+  
+}
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -120,9 +149,9 @@ function hello(name){
  */
 function quit(){
   console.log(parsedData)
-  const fs=require('fs')
+  const fs= require('fs')
   const data=JSON.stringify(parsedData)
-  try{fs.writeFileSync('database.json',data)
+  try{fs.writeFileSync(source,data)
   console.log('Saved successfuly')
   }catch(e){
     console.log('Batata error')
