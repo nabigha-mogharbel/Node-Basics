@@ -63,17 +63,23 @@ function onDataReceived(text) {
     text=text.slice(6,text.length-1);
     text=text.trim();
     remove(text);
-  }
-  else if(text==='remove\n'){
+  } else if(text==='remove\n'){
     remove(todoList.length)
-  } else if(text==='edit\n')
-  {console.log('error!: please enter a number of todo list to edit')}
-  else if(text.slice(0,5)==='edit '){
+  } else if(text==='edit\n'){
+    console.log('error!: please enter a number of todo list to edit')
+  } else if(text.slice(0,5)==='edit '){
     text=text.slice(5,text.length-1)
     text=text.split(' ')
     edit(text)
-  }
-  else{
+  } else if(text==='check\n'){
+    console.log('error! you should provide number of todo')
+  } else if(text.slice(0,6)==='check '){
+    check(text.slice(6,text.length-1))
+  } else if(text==='uncheck\n'){
+    console.log('error!: you should provide the number of your todo')
+  }else if(text.slice(0,8)==='uncheck '){
+    unCheck(text.slice(8,text.length-1))
+  } else{
     unknownCommand(text);
   }
 }
@@ -121,14 +127,14 @@ function help(){
   console.log('help: display list of all commands \nexit or quit: exits the application \nhello: says hello!')
 }
 
-let todoList=['grocery', 'get a new shoes', 'buy line recharge card'];
+let todoList = [{todo:"grocery", done:false}, {todo:"get a new shoes", done:true}, {todo:"buy line recharge card", done:false}];
 
  /**
  * prints the todo list
  * @returns {void}
  */
 function list(){
-  todoList.map((todo, index) => console.log(`[${index=index+1}] ${todo}`))
+  todoList.map((todo, index) => {todo.done===false? console.log(`[${index=index+1}] [ ] ${todo.todo}`): console.log(`[${index=index+1}] [✓] ${todo.todo}`)})
 }
 
  /**
@@ -138,7 +144,7 @@ function list(){
  * @returns {void}
  */
 function add(todo){
-  todo.length != 0 ? todoList.push(todo): console.log('error!: please enter a todo')
+  todo.length != 0 ? todoList.push({todo: todo, done:false}): console.log('error!: please enter a todo')
 }
 
 /**
@@ -148,14 +154,14 @@ function add(todo){
  * @returns {void}
  */
 function remove(index){
+  let stringIndx=index
+  console.log(index)
   index=parseInt(index);
-  if(!index){todoList.pop()}
+  if(!index && stringIndx!='0'){console.log(index); todoList.pop()}
+  else if(index<=0||index>todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
   else{
     if(index >0 && index<=todoList.length){
       todoList.splice(parseInt(index)-1,1)
-    }
-    else if(index === 0 ||index>todoList.length ){
-      console.log('error!: please enter a number that exists in your todo list')
     }
   }
 }
@@ -167,17 +173,54 @@ function edit(newTitle){
   let index=parseInt(trimmedTitle[0])
   if(index  && todoList.length >= index){
     trimmedTitle.shift();
-    todoList[index -1]=trimmedTitle.join(' ')
+    todoList[index -1].todo=trimmedTitle.join(' ')
   }
   else if(index  && todoList.length < index){
     console.log(`There is no todo number ${index} in your list`)
   }
   else if(!index && trimmedTitle.join('').length>0){
-    todoList[todoList.length-1]=trimmedTitle.join(' ')
-
+    todoList[todoList.length-1].todo=trimmedTitle.join(' ')
   }
   else{    console.log('error!: please enter a number that exists in your todo list')
 }
+}
+
+/**
+ * check => error!
+ * check x => check your todo number x in todo list
+ * @param  {string} index the text received
+ * @returns {void}
+ */
+function check(index){
+  let stringIndx=index
+  console.log(index)
+  index=parseInt(index);
+  if(!index && stringIndx!='0'){console.log('error!: please enter a number that exist your todo list')}
+  else if(index<=0||index>todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
+  else{
+    if(index >0 && index<=todoList.length){
+      todoList[index-1].done=true;
+    }
+  }
+}
+
+/**
+ * uncheck => error!
+ * uncheck x => uncheck your todo number x in todo list
+ * @param  {string} index the text received
+ * @returns {void}
+ */
+function unCheck(index){
+  let stringIndx=index
+  console.log(index)
+  index=parseInt(index);
+  if(!index && stringIndx!='0'){console.log('error!: please enter a number that exist your todo list')}
+  else if(index<=0||index>todoList.length ){console.log('error!: please enter a number that exists in your todo list')}
+  else{
+    if(index >0 && index<=todoList.length){
+      todoList[index-1].done=false;
+    }
+  }
 }
 // The following line starts the application
 startApp("Nabigha Mogharbel")
